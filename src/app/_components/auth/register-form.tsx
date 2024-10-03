@@ -38,7 +38,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow">
+    <div className="auth-form">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

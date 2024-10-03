@@ -70,3 +70,16 @@
     @apply border-border;
   }
 }
+
+
+/* auth */
+
+.auth-page {
+  @apply w-full pt-20 p-4
+}
+
+.auth-form {
+  @apply w-full max-w-sm p-4 rounded-lg
+}
+
+/* w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow */
