@@ -143,11 +143,11 @@ const RegisterForm = () => {
             <ArrowRight size={16} strokeWidth={3} />
           </Button>
           <div className="py-5 border-t mt-5 flex items-center justify-center">
-            <p className="text-sm text-center text-neutral-600">
+            <p className="text-xs font-medium text-center text-neutral-500">
               Already have an account?{" "}
               <Link
                 href="/auth/login"
-                className="text-orange-600 underline font-semibold"
+                className="text-orange-600  font-semibold"
               >
                 Sign in
               </Link>

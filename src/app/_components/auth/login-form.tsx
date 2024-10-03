@@ -17,25 +17,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { GoogleSvg } from "../svgs";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import React from "react";
 
-const LoginFormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+const LoginFormSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(1),
+  })
+  .required({
+    password: true,
+    email: true,
+  });
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
-    defaultValues: {
-      username: "",
-    },
   });
 
   function onSubmit(values: z.infer<typeof LoginFormSchema>) {
     console.log(values);
   }
+
+  // password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   return (
     <div className="w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow">
@@ -69,13 +74,12 @@ const LoginForm = () => {
           <div className="flex flex-col gap-2">
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       placeholder="Email"
-                      required
                       className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
                       {...field}
                     />
@@ -86,17 +90,31 @@ const LoginForm = () => {
             />
             <FormField
               control={form.control}
-              name="username"
+              name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="relative">
                   <FormControl>
                     <Input
-                      type="password"
+                      type={isPasswordVisible ? "text" : "password"}
                       placeholder="Password"
                       className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
                       {...field}
                     />
                   </FormControl>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsPasswordVisible(!isPasswordVisible);
+                    }}
+                    className="absolute top-0 right-0 h-8 px-4 grid place-items-center text-neutral-800 "
+                  >
+                    {isPasswordVisible ? (
+                      <EyeOff size={16} />
+                    ) : (
+                      <Eye size={16} />
+                    )}
+                  </button>
                   <FormMessage />
                 </FormItem>
               )}
@@ -104,22 +122,22 @@ const LoginForm = () => {
           </div>
           <Button
             type="submit"
-            className="w-full py-5 flex items-center gap-1.5 bg-orange-500 font-semibold"
+            className="w-full mt-3 py-5 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
           >
-            Sign in <ArrowRight size={16} strokeWidth={3} />
+            Sign in <ArrowRight size={14} strokeWidth={3} />
           </Button>
           <a
             href=""
-            className="text-sm font-semibold text-center my-1 text-orange-500"
+            className="text-xs font-semibold text-center my-2 text-orange-500"
           >
             Forgot your password ?
           </a>
           <div className="py-5 border-t flex items-center justify-center">
-            <p className="text-sm text-center text-neutral-600">
+            <p className="text-xs font-medium text-center text-neutral-500">
               Don't have an account yet?{" "}
               <Link
                 href="/auth/register"
-                className="text-orange-600 underline font-semibold"
+                className="text-orange-600  font-semibold"
               >
                 Sign up
               </Link>
