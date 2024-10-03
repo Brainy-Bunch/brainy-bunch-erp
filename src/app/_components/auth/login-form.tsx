@@ -20,6 +20,12 @@ import Link from "next/link";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import React from "react";
 
+import { useRouter } from "next/navigation";
+
+// firebase
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import  { auth } from "../../../../firebaseConfig";
+
 const LoginFormSchema = z
   .object({
     email: z.string().email(),
@@ -31,22 +37,44 @@ const LoginFormSchema = z
   });
 
 const LoginForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
   });
 
-  function onSubmit(values: z.infer<typeof LoginFormSchema>) {
-    console.log(values);
-  }
-
   // password visibility
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+  // auth yo
+ 
+  async function onLogin(values: z.infer<typeof LoginFormSchema>) {
+    try {
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      const user = credentials.user;
+
+      console.log(user);
+    } catch {}
+  }
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log(user);
+      router.push("/dashboard");
+    } else {
+    }
+  });
 
   return (
     <div className="auth-form">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onLogin)}
           className="flex flex-col gap-4"
         >
           <div></div>
@@ -82,6 +110,7 @@ const LoginForm = () => {
                       placeholder="Email"
                       className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage />
@@ -99,6 +128,7 @@ const LoginForm = () => {
                       placeholder="Password"
                       className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <button
