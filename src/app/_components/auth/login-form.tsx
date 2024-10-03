@@ -65,7 +65,7 @@ const LoginForm = () => {
   auth.onAuthStateChanged((user) => {
     if (user) {
       console.log(user);
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } else {
     }
   });
@@ -78,21 +78,21 @@ const LoginForm = () => {
           className="flex flex-col gap-4"
         >
           <div></div>
-          <div className="space-y-1 mb-4">
-            <h1 className="text-lg font-bold tracking-tight">
+          <div className="space-y-3 mb-10">
+            <h1 className="text-2xl font-bold tracking-tight">
               Sign in to your account
             </h1>
-            <p className="text-xs text-neutral-500">
+            <p className="text text-neutral-500">
               Welcome back. Please sign in to proceed.
             </p>
           </div>
           <div>
             <Button
-              className="w-full py-5 shadow flex items-center gap-1.5"
+              className="w-full py-6 shadow flex items-center gap-3"
               variant={"outline"}
             >
               <GoogleSvg className="size-6" />
-              Google
+              Continue with Google
             </Button>
           </div>
           <div className=" relative py-3 flex items-center justify-center">
@@ -122,6 +122,7 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem className="relative">
+                  
                   <FormControl>
                     <Input
                       type={isPasswordVisible ? "text" : "password"}
@@ -152,15 +153,15 @@ const LoginForm = () => {
           </div>
           <Button
             type="submit"
-            className="w-full mt-3 py-5 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
+            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
           >
             Sign in <ArrowRight size={14} strokeWidth={3} />
           </Button>
           <a
             href="/auth/forgot-password"
-            className="text-xs font-semibold text-center my-2 text-orange-500"
+            className=" font-semibold text-center my-6 text-orange-500"
           >
-            Forgot your password ?
+            Forgot your password?
           </a>
         </form>
       </Form>

@@ -14,6 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import React from "react";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+// import { auth } from "../../../../firebaseConfig";
 
 const EmailSchema = z
   .object({
@@ -28,8 +30,19 @@ const ForgotPassword = () => {
     resolver: zodResolver(EmailSchema),
   });
 
+  const auth = getAuth();
+
+  const [hasSentEmail, setHasSentEmail] = React.useState(false);
+
   function onSubmit(values: z.infer<typeof EmailSchema>) {
-    console.log(values);
+    sendPasswordResetEmail(auth, values.email)
+      .then((data) => {
+        console.log("check email");
+        setHasSentEmail(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return (
     <div className="auth-form">
@@ -39,43 +52,49 @@ const ForgotPassword = () => {
           className="flex flex-col gap-4"
         >
           <div></div>
-          <div className="space-y-1 mb-4">
-            <h1 className="text-lg font-bold tracking-tight">
-              Forgot your password?{" "}
+          <div className="space-y-3 mb-10">
+            <h1 className="text-2xl font-bold tracking-tight">
+              {hasSentEmail ? "Email sent" : "Forgot your password?"}
             </h1>
-            <p className="text-xs text-neutral-500">
-              Enter your email address and we will send you a link to reset your
-              password.
+            <p className="text text-neutral-500 !leading-relaxed">
+              {hasSentEmail
+                ? "Check your email for a link to reset your password."
+                : " Enter your email address and we will send you a link to reset your password."}
             </p>
           </div>
-          <div className="flex flex-col gap-2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Email"
-                      className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          {hasSentEmail ? null : (
+            <div className="flex flex-col gap-2">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="Email"
+                        className="shadow-none py-6 bg-neutral-100 ring-transparent outline-none focus:border-neutral-300"
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          )}
+
           <Button
             type="submit"
-            className="w-full mt-3 py-5 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
+            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
           >
-            Send email <ArrowRight size={14} strokeWidth={3} />
+            {hasSentEmail ? "Open Inbox" : "Send email"}{" "}
+            <ArrowRight size={14} strokeWidth={3} />
           </Button>
           <div className="w-full flex justify-center">
             <a
               href="/auth/login"
-              className="text-xs font-semibold text-center my-2 text-orange-500"
+              className="font-semibold text-center my-6 text-orange-500"
             >
               Back to login
             </a>
