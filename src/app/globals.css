@@ -70,20 +70,3 @@
     @apply border-border;
   }
 }
-
-
-/* auth */
-
-.auth-page {
-  @apply w-full pt-20 p-4
-}
-
-.auth-form {
-  @apply w-full max-w-sm p-4 rounded-lg m-auto
-}
-
-.auth-btn {
-  @apply w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold
-}
-
-/* w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow */
