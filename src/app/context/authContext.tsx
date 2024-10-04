@@ -4,6 +4,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
+import { getFirestore, doc, getDoc, collection } from "firebase/firestore"; // Import Firestore functions
+import { fetchUserByUid } from "../utils/firebase/getUser";
 
 // Create a context for authentication
 const AuthContext = createContext<{ user: User | null }>({ user: null });
@@ -13,11 +15,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user); // Set the logged-in user to state
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userData = await fetchUserByUid(user.uid);
+          if (userData) {
+            setUser(userData as User);
+          } else {
+            console.log("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching user document: ", error);
+        }
+      }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 

@@ -34,6 +34,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 import { auth } from "../../../../firebaseConfig";
 import Loader from "../common/loader";
+import { fetchUserByUid } from "@/app/utils/firebase/getUser";
 
 const LoginFormSchema = z
   .object({
@@ -93,8 +94,6 @@ const LoginForm = () => {
 
         // The signed-in user info.
         const user = result?.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
       })
       .catch((error) => {
         // Handle Errors here.
