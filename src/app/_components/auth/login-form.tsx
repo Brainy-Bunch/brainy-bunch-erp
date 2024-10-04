@@ -23,8 +23,17 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 // firebase
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import  { auth } from "../../../../firebaseConfig";
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+} from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+
+import { auth } from "../../../../firebaseConfig";
+import Loader from "../common/loader";
 
 const LoginFormSchema = z
   .object({
@@ -46,9 +55,9 @@ const LoginForm = () => {
   // password visibility
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
-  // auth yo
- 
+  // * authentication yo
   async function onLogin(values: z.infer<typeof LoginFormSchema>) {
+    setIsLoading(true);
     try {
       const credentials = await signInWithEmailAndPassword(
         auth,
@@ -70,6 +79,36 @@ const LoginForm = () => {
     }
   });
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = async () => {
+    signInWithRedirect(auth, provider);
+    getRedirectResult(auth)
+      .then((result) => {
+        if (!result) return;
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+
+        // The signed-in user info.
+        const user = result?.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
+  // * google authentication yo
+
   return (
     <div className="auth-form">
       <Form {...form}>
@@ -90,6 +129,11 @@ const LoginForm = () => {
             <Button
               className="w-full py-6 shadow flex items-center gap-3"
               variant={"outline"}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                signInWithGoogle();
+              }}
             >
               <GoogleSvg className="size-6" />
               Continue with Google
@@ -122,7 +166,6 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem className="relative">
-                  
                   <FormControl>
                     <Input
                       type={isPasswordVisible ? "text" : "password"}
@@ -151,11 +194,17 @@ const LoginForm = () => {
               )}
             />
           </div>
-          <Button
-            type="submit"
-            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
-          >
-            Sign in <ArrowRight size={14} strokeWidth={3} />
+          <Button type="submit" disabled={isLoading} className="auth-btn">
+            {isLoading ? (
+              <>
+                Signing in
+                <Loader className="ml-2" />
+              </>
+            ) : (
+              <>
+                Sign in <ArrowRight size={14} strokeWidth={3} />
+              </>
+            )}
           </Button>
           <a
             href="/auth/forgot-password"

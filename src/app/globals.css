@@ -82,4 +82,8 @@
   @apply w-full max-w-sm p-4 rounded-lg
 }
 
+.auth-btn {
+  @apply w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold
+}
+
 /* w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow */

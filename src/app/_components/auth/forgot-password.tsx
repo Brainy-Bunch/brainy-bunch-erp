@@ -16,6 +16,7 @@ import { ArrowRight } from "lucide-react";
 import React from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import Loader from "../common/loader";
+import { useRouter } from "next/navigation";
 // import { auth } from "../../../../firebaseConfig";
 
 const EmailSchema = z
@@ -27,6 +28,8 @@ const EmailSchema = z
   });
 
 const ForgotPassword = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof EmailSchema>>({
     resolver: zodResolver(EmailSchema),
   });
@@ -89,18 +92,23 @@ const ForgotPassword = () => {
           )}
 
           <Button
-            type="submit"
+            type={hasSentEmail ? "button" : "submit"}
             disabled={isLoading}
-            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold"
+            className="auth-btn"
+            onClick={() => {
+              if (hasSentEmail) {
+                router.push("/auth/login");
+              }
+            }}
           >
             {isLoading ? (
               <>
-              <span>Sending email</span>
-              <Loader />
+                <span>Sending email</span>
+                <Loader />
               </>
             ) : (
               <>
-                {hasSentEmail ? "Open Inbox" : "Send email"}{" "}
+                {hasSentEmail ? "Proceed to login" : "Send email"}{" "}
                 <ArrowRight size={14} strokeWidth={3} />
               </>
             )}
