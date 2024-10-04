@@ -72,10 +72,18 @@ const LoginForm = () => {
     } catch {}
   }
 
+  const handleRole = async (id: string) => {
+    const user = await fetchUserByUid(id);
+    if (user?.role === "admin") {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/coach/dashboard");
+    }
+  };
+
   auth.onAuthStateChanged((user) => {
     if (user) {
-      console.log(user);
-      // router.push("/dashboard");
+      handleRole(user.uid);
     } else {
     }
   });

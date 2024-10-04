@@ -79,7 +79,7 @@
 }
 
 .auth-form {
-  @apply w-full max-w-sm p-4 rounded-lg
+  @apply w-full max-w-sm p-4 rounded-lg m-auto
 }
 
 .auth-btn {
