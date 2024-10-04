@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import Loader from "../common/loader";
 // import { auth } from "../../../../firebaseConfig";
 
 const EmailSchema = z
@@ -33,12 +34,15 @@ const ForgotPassword = () => {
   const auth = getAuth();
 
   const [hasSentEmail, setHasSentEmail] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   function onSubmit(values: z.infer<typeof EmailSchema>) {
+    setIsLoading(true);
     sendPasswordResetEmail(auth, values.email)
       .then((data) => {
         console.log("check email");
         setHasSentEmail(true);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -86,10 +90,20 @@ const ForgotPassword = () => {
 
           <Button
             type="submit"
-            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 font-semibold"
+            disabled={isLoading}
+            className="w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold"
           >
-            {hasSentEmail ? "Open Inbox" : "Send email"}{" "}
-            <ArrowRight size={14} strokeWidth={3} />
+            {isLoading ? (
+              <>
+              <span>Sending email</span>
+              <Loader />
+              </>
+            ) : (
+              <>
+                {hasSentEmail ? "Open Inbox" : "Send email"}{" "}
+                <ArrowRight size={14} strokeWidth={3} />
+              </>
+            )}
           </Button>
           <div className="w-full flex justify-center">
             <a
