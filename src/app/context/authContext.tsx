@@ -2,17 +2,25 @@
 
 // authContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import { getFirestore, doc, getDoc, collection } from "firebase/firestore"; // Import Firestore functions
 import { fetchUserByUid } from "../utils/firebase/getUser";
 
+export type TUser = {
+  email: string;
+  role: string;
+  createdAt: string;
+  phone: string;
+  userId: string;
+};
+
 // Create a context for authentication
-const AuthContext = createContext<{ user: User | null }>({ user: null });
+const AuthContext = createContext<{ user: TUser | null }>({ user: null });
 
 // Provide AuthContext to the app
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [userState, setUser] = useState<TUser | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -20,7 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           const userData = await fetchUserByUid(user.uid);
           if (userData) {
-            setUser(userData as User);
+            setUser(userData as TUser);
           } else {
             console.log("No such document!");
           }
@@ -34,9 +42,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user: userState }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
 // Custom hook to use the AuthContext
 export const useAuth = () => useContext(AuthContext);
+
