@@ -42,12 +42,12 @@ const PagesNavigation = () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none ring-transparent">
           <div className="flex items-center gap-2">
-            <p className="text-xl">{page}</p>
+            <p className="text-base">{page}</p>
             <ChevronsUpDown size={14} />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[200px] shadow-sm p-2 flex flex-col gap-1"
+          className="w-[200px] shadow-sm p-2 flex flex-col gap-1 border border-slate-200"
           align="start"
           sideOffset={10}
         >

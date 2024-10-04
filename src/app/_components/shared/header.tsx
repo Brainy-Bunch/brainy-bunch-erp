@@ -1,4 +1,5 @@
 import AdminProfileMenu from "./admin-profile";
+import Notifications from "./notifications";
 import PagesNavigation from "./pages-menu";
 
 type THeaderProps = {
@@ -7,10 +8,13 @@ type THeaderProps = {
 
 const Header = ({ role }: THeaderProps) => {
   return (
-    <header className="w-full p-6 flex items-center justify-between">
+    <header className="w-full p-4 bg-white  flex items-center justify-between">
       <PagesNavigation />
       {/* {role === "admin" ? <AdminProfileMenu /> : null} */}
-      <AdminProfileMenu />
+      <div className="flex items-center gap-2">
+        <Notifications />
+        <AdminProfileMenu />
+      </div>
     </header>
   );
 };
