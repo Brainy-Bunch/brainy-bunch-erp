@@ -9,14 +9,14 @@ import { Calendar, Clock, User } from "lucide-react";
 const Dashboard = () => {
   const user = useAuth();
   return (
-    <div className="bg-neutral-50 pb-20">
+    <div className=" pb-20">
       <Header role={user.user?.role || ""} />
       <div className="px-4">
         <div className="mt-6 space-y-12">
           <SessionsMetrics />
 
           {/* upcoming classes */}
-          <UpcomingSessions />
+          {/* <UpcomingSessions /> */}
         </div>
       </div>
     </div>

@@ -1,99 +1,108 @@
 import { cn } from "@/lib/utils";
-import { ArrowDown, ArrowUp, ArrowUpRight } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpRight,
+  ChevronRight,
+  Minus,
+} from "lucide-react";
 import { useState } from "react";
 
 const SessionsMetrics = () => {
   const [activeGame, setActiveGame] = useState("scrabble");
   return (
     <div className="space-y-3">
-      <h1 className=" text-lg font-medium text-black">Training sessions</h1>
-      <div className="w-full p-2 space-y-2 border rounded-md bg-white">
-        <div className="w-full bg-white grid grid-cols-2 p-1 gap-1 border border-neutral-200 rounded h-10">
-          <button
-            onClick={() => setActiveGame("scrabble")}
-            className={cn(
-              "w-full h-full text-sm grid rounded-sm place-items-center",
-              activeGame === "scrabble"
-                ? "bg-neutral-100 text-black"
-                : "text-neutral-400 bg-white"
-            )}
-          >
-            Scrabble
-          </button>
-          <button
-            onClick={() => setActiveGame("chess")}
-            className={cn(
-              "w-full h-full text-sm grid rounded-sm place-items-center",
-              activeGame === "chess"
-                ? "bg-neutral-100 text-black"
-                : "text-neutral-400 bg-white"
-            )}
-          >
-            Chess
-          </button>
+      <div className="w-full border rounded-md bg-white">
+        <div className="p-4 border-b flex items-center justify-between">
+          <h1 className=" font-semibold text-black">Training sessions</h1>
+          <ChevronRight size={14} />
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border border-neutral-200/60 rounded-sm bg-white">
-          <div className="flex flex-col gap-2  px-6">
-            <p className="text-neutral-600 flex text-sm justify-between">
-              Total sessions this month{" "}
-              <a
-                href=""
-                className="text-xs underline flex items-center text-blue-500"
-              >
-                details
-                <ArrowUpRight size={12} />
-              </a>
-            </p>{" "}
-            <div className="flex items-center gap-3">
-              <p className="text-3xl font-semibold tracking-tighter">45</p>
-              {/* <div className="text-green-500 flex gap-1 items-center">
-            <ArrowUp size={14} strokeWidth={4} />
-            <p className="font-bold">34%</p>
-          </div> */}
-              <div className="text-red-500 flex gap-1 items-center">
-                <ArrowDown size={14} strokeWidth={4} />
-                <p className="font-bold">30.5%</p>
+        <div className=" py-4 flex flex-col gap-4">
+          <div className="px-4 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <p className="font-medium text-sm">Total classes</p>
+              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
+                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
+                  Month
+                </button>
+                <button className="w-full h-full text-sm lowercase font-medium">
+                  Week
+                </button>
               </div>
             </div>
-          </div>
-          <hr className="border-neutral-200/60" />
-          <div className="flex flex-col gap-2 px-6">
-            <div className="text-neutral-600 flex justify-between">
-              <p className="flex gap-2 text-neutral-600 text-sm">
-                Ongoing sessions
-                <span className="size-1 bg-green-400 rounded-full animate-ping"></span>
-              </p>
-              <a
-                href=""
-                className="text-xs underline flex items-center text-blue-500"
-              >
-                details
-                <ArrowUpRight size={12} />
-              </a>
-            </div>
-            <div className="flex items-center gap-3">
-              <p className="text-3xl font-semibold tracking-tighter">0</p>
-            </div>
-          </div>
-          <hr className="border-neutral-200/60" />
-          <div className="flex flex-col gap-2 px-6">
-            <p className="flex gap-2 text-neutral-600 text-sm justify-between">
-              Cancelled sessions
-              <a
-                href=""
-                className="text-xs underline flex items-center text-blue-500"
-              >
-                details
-                <ArrowUpRight size={12} />
-              </a>
+            <p className="text-5xl font-bold tracking-tighter">
+              30{" "}
+              <span className="text-sm tracking-normal font-bold text-neutral-400">
+                classes
+              </span>
             </p>
-            <div className="flex items-center gap-3">
-              <p className="text-3xl font-semibold tracking-tighter">4</p>
-              <div className="text-green-500 flex gap-1 items-center">
-                <ArrowUp size={14} strokeWidth={4} />
+            <div className="flex gap-1 items-center">
+              <div className="flex items-center gap-1 text-green-500">
+                <ArrowUp size={16} strokeWidth={4} />
                 <p className="font-bold">34.86%</p>
               </div>
+              <p className="text-xs font-bold uppercase text-neutral-300">
+                vs previous 28 days
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="px-4 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <p className="font-medium text-sm">Active classes</p>
+              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
+                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
+                  Today
+                </button>
+                <button className="w-full h-full text-sm lowercase font-medium">
+                  Week
+                </button>
+              </div>
+            </div>
+            <p className="text-5xl font-bold tracking-tighter">
+              1
+              <span className="ml-2 text-sm tracking-normal font-bold text-neutral-400">
+                class
+              </span>
+            </p>
+            <div className="flex gap-1 items-center">
+              <div className="flex items-center gap-1 text-red-500">
+                <ArrowDown size={16} strokeWidth={4} />
+                <p className="font-bold">4.21%</p>
+              </div>
+              <p className="text-xs font-bold uppercase text-neutral-300">
+                vs previous day
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="px-4 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <p className="font-medium text-sm">Cancelled classes</p>
+              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
+                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
+                  Month
+                </button>
+                <button className="w-full h-full text-sm lowercase font-medium">
+                  Week
+                </button>
+              </div>
+            </div>
+            <p className="text-5xl font-bold tracking-tighter">
+              0{" "}
+              <span className="text-sm tracking-normal font-bold text-neutral-400">
+                classes
+              </span>
+            </p>
+            <div className="flex gap-1 items-center">
+              <div className="flex items-center gap-1 text-yellow-500">
+                <Minus size={16} strokeWidth={4} />
+                <p className="font-bold">0%</p>
+              </div>
+              <p className="text-xs font-bold uppercase text-neutral-300">
+                vs previous 28 days
+              </p>
             </div>
           </div>
         </div>

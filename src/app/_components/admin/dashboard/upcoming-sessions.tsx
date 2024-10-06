@@ -174,9 +174,9 @@ const UpcomingSessions = () => {
   const [activeGame, setActiveGame] = useState("scrabble");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className=" text-lg font-medium text-black">Upcoming sessions</h1>
+        <h1 className=" text-xl font-medium text-black mb-6">Upcoming sessions</h1>
       </div>
       <div className="flex flex-col  relative bg-white    p-2 border border-neutral-200 rounded-md">
         {upcomingSessions.map((session, index) => {

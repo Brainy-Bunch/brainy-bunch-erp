@@ -8,7 +8,7 @@ type THeaderProps = {
 
 const Header = ({ role }: THeaderProps) => {
   return (
-    <header className="w-full p-4 bg-white  flex items-center justify-between">
+    <header className="w-full p-4 py-2 border-b sticky top-0 z-[9999] bg-white  flex items-center justify-between">
       <PagesNavigation />
       {/* {role === "admin" ? <AdminProfileMenu /> : null} */}
       <div className="flex items-center gap-2">
