@@ -175,6 +175,17 @@ const chartConfig = {
     label: "Cancelled classes",
   },
 } satisfies ChartConfig;
+const comparisonChartConfig = {
+  completedClassesScrabble: {
+    label: "Scrabble",
+  },
+  completedClassesChess: {
+    label: "Chess",
+  },
+  completedClassesCoding: {
+    label: "Coding",
+  },
+} satisfies ChartConfig;
 
 const data: Record<ActivityType, ActivityData[]> = {
   scrabble: chartDataScrabble,
@@ -190,7 +201,7 @@ const ActivityChart = ({
   fill: string;
 }) => {
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer className="min-h-[350px] max-w-full" config={chartConfig}>
       <BarChart accessibilityLayer data={data[activity as ActivityType]}>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -213,8 +224,65 @@ const ActivityChart = ({
           stackId="a"
           fill="#e76e50"
           radius={[4, 4, 4, 4]}
-          
         />
+      </BarChart>
+    </ChartContainer>
+  );
+};
+
+const ComparisonChart = ({}) => {
+  const combineChartData = (
+    dataScrabble: ActivityData[],
+    dataChess: ActivityData[],
+    dataCoding: ActivityData[]
+  ) => {
+    const combinedData = [];
+
+    for (let i = 0; i < dataScrabble.length; i++) {
+      const month = dataScrabble[i].month;
+      const completedClassesScrabble = dataScrabble[i].completedClasses;
+      const completedClassesChess = dataChess[i].completedClasses;
+      const completedClassesCoding = dataCoding[i].completedClasses;
+
+      combinedData.push({
+        month,
+        completedClassesChess: completedClassesScrabble, // or replace with appropriate field if needed
+        completedClassesCoding: completedClassesChess, // total completed classes for Chess and Coding
+        completedClassesScrabble: completedClassesScrabble,
+      });
+    }
+
+    return combinedData;
+  };
+  const allData = combineChartData(
+    chartDataChess,
+    chartDataCoding,
+    chartDataCoding
+  );
+  console.log(allData);
+  return (
+    <ChartContainer
+      className="min-h-[350px] max-w-full"
+      config={comparisonChartConfig}
+    >
+      <BarChart accessibilityLayer data={allData}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent indicator="dashed" />}
+        />
+        <ChartLegend content={<ChartLegendContent />} />
+
+        <Bar dataKey="completedClassesScrabble" fill="#f4a462" radius={4} />
+        <Bar dataKey="completedClassesChess" fill="#87A2FF" radius={4} />
+        <Bar dataKey="completedClassesCoding" fill="#FFF100" radius={4} />
       </BarChart>
     </ChartContainer>
   );
@@ -289,6 +357,9 @@ const SessionsMetrics = () => {
             fill={fill[activeActivity]}
             activity={activeActivity}
           />
+          <p className="mt-2 text-neutral-400 w-ful text-right text-sm">
+            Updated 2m ago
+          </p>
         </div>
       </div>
 
@@ -325,9 +396,20 @@ const SessionsMetrics = () => {
         </div>
       </div>
 
-      {/* comparisons */}
-
-      {/* tabs */}
+      <hr />
+      <div className="p-4">
+        {" "}
+        <h1 className=" font-medium mb-1">Sessions comparison</h1>
+        <p className="text-sm text-neutral-500 mb-3">
+          Comparison of <b>completed classes</b> for all activities
+        </p>
+        <div className="w-full">
+          <ComparisonChart />
+          <p className="mt-2 text-neutral-400 w-ful text-right text-sm">
+            Updated 2m ago
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
