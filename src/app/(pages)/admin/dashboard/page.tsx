@@ -1,5 +1,7 @@
 "use client";
 
+import CoachMetrics from "@/app/_components/admin/dashboard/CoachesMetrics";
+import GameParticipation from "@/app/_components/admin/dashboard/GameParticipation";
 import SessionsMetrics from "@/app/_components/admin/dashboard/SessionsMetrics";
 import UpcomingSessions from "@/app/_components/admin/dashboard/upcoming-sessions";
 import Header from "@/app/_components/shared/header";
@@ -12,10 +14,11 @@ const Dashboard = () => {
     <div className=" pb-20">
       <Header role={user.user?.role || ""} />
       <div className="px-4">
-        <div className="mt-6 space-y-6">
+        <div className="mt-6 space-y-16">
           <SessionsMetrics />
-          {/* upcoming classes */}
           <UpcomingSessions />
+          <GameParticipation />
+          <CoachMetrics />
         </div>
       </div>
     </div>
