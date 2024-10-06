@@ -8,105 +8,326 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-const SessionsMetrics = () => {
-  const [activeGame, setActiveGame] = useState("scrabble");
-  return (
-    <div className="space-y-3">
-      <div className="w-full border rounded-md bg-white">
-        <div className="p-4 border-b flex text-blue-500 items-center justify-between">
-          <h1 className=" font-semibold">Training sessions</h1>
-          <ChevronRight size={14} strokeWidth={4} />
-        </div>
+// charts
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
-        <div className=" py-4 flex flex-col gap-4">
-          <div className="px-4 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <p className="font-medium text-sm">Total classes</p>
-              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
-                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
-                  Month
+// TYPES YO
+type ActivityData = { month: string } & {
+  scrabble?: number;
+  chess?: number;
+  coding?: number;
+  cancelledClasses: number;
+  completedClasses: number;
+  totalHours: number;
+};
+type ActivityType = "scrabble" | "chess" | "coding";
+
+const availableActivities = ["scrabble", "chess", "coding"];
+
+const chartDataScrabble = [
+  {
+    month: "January",
+    scrabble: 7,
+    completedClasses: 5,
+    cancelledClasses: 2,
+    totalHours: 48,
+  },
+  {
+    month: "February",
+    scrabble: 8,
+    completedClasses: 7,
+    cancelledClasses: 1,
+    totalHours: 70,
+  },
+  {
+    month: "March",
+    scrabble: 11,
+    completedClasses: 11,
+    cancelledClasses: 0,
+    totalHours: 46,
+  },
+  {
+    month: "April",
+    scrabble: 2,
+    completedClasses: 2,
+    cancelledClasses: 0,
+    totalHours: 21,
+  },
+  {
+    month: "May",
+    scrabble: 7,
+    completedClasses: 6,
+    cancelledClasses: 1,
+    totalHours: 60,
+  },
+  {
+    month: "June",
+    scrabble: 4,
+    completedClasses: 4,
+    cancelledClasses: 0,
+    totalHours: 42,
+  },
+];
+
+const chartDataChess = [
+  {
+    month: "January",
+    chess: 4,
+    completedClasses: 3,
+    cancelledClasses: 1,
+    totalHours: 24,
+  },
+  {
+    month: "February",
+    chess: 6,
+    completedClasses: 6,
+    cancelledClasses: 0,
+    totalHours: 40,
+  },
+  {
+    month: "March",
+    chess: 7,
+    completedClasses: 7,
+    cancelledClasses: 0,
+    totalHours: 36,
+  },
+  {
+    month: "April",
+    chess: 10,
+    completedClasses: 10,
+    cancelledClasses: 0,
+    totalHours: 30,
+  },
+  {
+    month: "May",
+    chess: 12,
+    completedClasses: 12,
+    cancelledClasses: 1,
+    totalHours: 90,
+  },
+  {
+    month: "June",
+    chess: 5,
+    completedClasses: 5,
+    cancelledClasses: 0,
+    totalHours: 42,
+  },
+];
+
+const chartDataCoding = [
+  {
+    month: "January",
+    coding: 14,
+    completedClasses: 10,
+    cancelledClasses: 4,
+    totalHours: 87,
+  },
+  {
+    month: "February",
+    coding: 15,
+    completedClasses: 14,
+    cancelledClasses: 1,
+    totalHours: 15,
+  },
+  {
+    month: "March",
+    coding: 3,
+    completedClasses: 3,
+    cancelledClasses: 0,
+    totalHours: 180,
+  },
+  {
+    month: "April",
+    coding: 2,
+    completedClasses: 2,
+    cancelledClasses: 0,
+    totalHours: 120,
+  },
+  {
+    month: "May",
+    coding: 7,
+    completedClasses: 7,
+    cancelledClasses: 0,
+    totalHours: 117,
+  },
+  {
+    month: "June",
+    coding: 6,
+    completedClasses: 5,
+    cancelledClasses: 1,
+    totalHours: 231,
+  },
+];
+
+const chartConfig = {
+  completedClasses: {
+    label: "Completed classes" + " ",
+  },
+  cancelledClasses: {
+    label: "Cancelled classes",
+  },
+} satisfies ChartConfig;
+
+const data: Record<ActivityType, ActivityData[]> = {
+  scrabble: chartDataScrabble,
+  chess: chartDataChess,
+  coding: chartDataCoding,
+};
+
+const ActivityChart = ({
+  activity,
+  fill,
+}: {
+  activity: string;
+  fill: string;
+}) => {
+  return (
+    <ChartContainer config={chartConfig}>
+      <BarChart accessibilityLayer data={data[activity as ActivityType]}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Bar
+          dataKey="completedClasses"
+          stackId="a"
+          fill={fill}
+          radius={[4, 4, 4, 4]}
+        />
+        <Bar
+          dataKey="cancelledClasses"
+          stackId="a"
+          fill="#e76e50"
+          radius={[4, 4, 4, 4]}
+          
+        />
+      </BarChart>
+    </ChartContainer>
+  );
+};
+
+const SessionsMetrics = () => {
+  const [activeActivity, setActiveActivity] = useState<
+    "scrabble" | "chess" | "coding"
+  >("scrabble");
+  const fill = {
+    scrabble: "#f4a462",
+    chess: "#87A2FF",
+    coding: "#FFF100",
+  };
+
+  // TOTALS
+
+  const totalSessions = data[activeActivity as ActivityType].reduce(
+    (acc, curr) => acc + (curr[activeActivity] || 0),
+    0
+  );
+
+  const completedClasses = data[activeActivity as ActivityType].reduce(
+    (acc, curr) => acc + (curr["completedClasses"] || 0),
+    0
+  );
+
+  const cancelledClasses = data[activeActivity as ActivityType].reduce(
+    (acc, curr) => acc + (curr["cancelledClasses"] || 0),
+    0
+  );
+
+  return (
+    <div className="w-full border rounded-md bg-white">
+      <div className="p-4 border-b flex items-center justify-between ">
+        <h1 className=" font-semibold ">Training sessions</h1>
+        <ChevronRight size={14} strokeWidth={4} />
+      </div>
+
+      <div className="p-4 flex flex-col gap-3">
+        <div className="">
+          <h1 className=" font-medium mb-1">Total sessions</h1>
+          <p className="text-sm text-neutral-500 mb-3">
+            Cumulative number of monthly sessions held across all activities
+          </p>
+          <div
+            className="w-full border h-10 grid rounded grid-cols-3 p-1"
+            style={{
+              gridTemplateColumns: `repeat(${availableActivities.length}, minmax(0, 1fr))`,
+            }}
+          >
+            {availableActivities.map((activity, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => setActiveActivity(activity as ActivityType)}
+                  className={cn(
+                    "text-sm rounded",
+                    activeActivity === activity
+                      ? "bg-neutral-100 text-neutral-800 font-medium"
+                      : "text-neutral-500"
+                  )}
+                >
+                  {activity}
                 </button>
-                <button className="w-full h-full text-sm lowercase font-medium">
-                  Week
-                </button>
-              </div>
-            </div>
-            <p className="text-5xl font-bold tracking-tighter">
-              30{" "}
-              <span className="text-sm tracking-normal font-bold text-neutral-400">
-                classes
-              </span>
-            </p>
-            <div className="flex gap-1 items-center">
-              <div className="flex items-center gap-1 text-green-500">
-                <ArrowUp size={16} strokeWidth={4} />
-                <p className="font-bold">34.86%</p>
-              </div>
-              <p className="text-xs font-bold uppercase text-neutral-300">
-                vs previous 28 days
-              </p>
-            </div>
+              );
+            })}
           </div>
-          <hr />
-          <div className="px-4 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <p className="font-medium text-sm">Active classes</p>
-              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
-                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
-                  Today
-                </button>
-                <button className="w-full h-full text-sm lowercase font-medium">
-                  Week
-                </button>
-              </div>
-            </div>
-            <p className="text-5xl font-bold tracking-tighter">
-              1
-              <span className="ml-2 text-sm tracking-normal font-bold text-neutral-400">
-                class
-              </span>
-            </p>
-            <div className="flex gap-1 items-center">
-              <div className="flex items-center gap-1 text-red-500">
-                <ArrowDown size={16} strokeWidth={4} />
-                <p className="font-bold">4.21%</p>
-              </div>
-              <p className="text-xs font-bold uppercase text-neutral-300">
-                vs previous day
-              </p>
-            </div>
-          </div>
-          <hr />
-          <div className="px-4 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <p className="font-medium text-sm">Cancelled classes</p>
-              <div className="grid grid-cols-2 w-36 h-8 rounded-md divide-x border">
-                <button className="w-full h-full text-sm lowercase font-medium bg-neutral-100">
-                  Month
-                </button>
-                <button className="w-full h-full text-sm lowercase font-medium">
-                  Week
-                </button>
-              </div>
-            </div>
-            <p className="text-5xl font-bold tracking-tighter">
-              0{" "}
-              <span className="text-sm tracking-normal font-bold text-neutral-400">
-                classes
-              </span>
-            </p>
-            <div className="flex gap-1 items-center">
-              <div className="flex items-center gap-1 text-yellow-500">
-                <Minus size={16} strokeWidth={4} />
-                <p className="font-bold">0%</p>
-              </div>
-              <p className="text-xs font-bold uppercase text-neutral-300">
-                vs previous 28 days
-              </p>
-            </div>
-          </div>
+        </div>
+        <div>
+          <ActivityChart
+            fill={fill[activeActivity]}
+            activity={activeActivity}
+          />
         </div>
       </div>
+
+      <div className="p-4 flex flex-col gap-1">
+        <div className="bg-neutral-50 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div
+              className="size-2 rounded-full"
+              style={{ backgroundColor: fill[activeActivity] }}
+            />
+            <p className="font-medium">Total sessions</p>
+          </div>
+          <p className="text-neutral-700">
+            {totalSessions.toLocaleString("en-Us")}
+          </p>
+        </div>
+        <div className=" text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div className="size-2 rounded-full bg-green-500" />
+            <p className="font-medium">Total hours</p>
+          </div>
+          <p className="text-neutral-700">
+            {completedClasses.toLocaleString()}
+          </p>
+        </div>
+        <div className="bg-neutral-50 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div className="size-2 rounded-full bg-red-500" />
+            <p className="font-medium">Cancelled sessions</p>
+          </div>
+          <p className="text-neutral-700">
+            {cancelledClasses.toLocaleString("en-Us")}
+          </p>
+        </div>
+      </div>
+
+      {/* comparisons */}
+
+      {/* tabs */}
     </div>
   );
 };

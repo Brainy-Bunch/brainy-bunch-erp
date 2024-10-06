@@ -126,6 +126,7 @@ const CoachMetrics = () => {
           {coachesData.map((coach, index) => {
             return (
               <div
+                key={index}
                 className={cn(
                   "w-full p-2  grid grid-cols-3 text-[14px] font-medium",
                   index % 2 === 0 ? "bg-neutral-50" : "bg-white"
