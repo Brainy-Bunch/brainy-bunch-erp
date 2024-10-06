@@ -6,6 +6,11 @@ import {
   ArrowUpRight,
   Users,
   ArrowRight,
+  ChevronRight,
+  MapPin,
+  Webcam,
+  UsersRound,
+  UserRound,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -19,6 +24,8 @@ type Session = {
   status: "Scheduled" | "Cancelled" | "Completed";
   studentsEnrolled: number;
   gameType: string;
+  sessionMode: "Online" | "In-Person";
+  sessionType: "Individual" | "Group";
 };
 
 const ChessSvg = (
@@ -40,8 +47,8 @@ const ChessSvg = (
 const ScrabbleSvg = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24px"
-    height="24px"
+    width="14px"
+    height="14px"
     viewBox="0 0 76 76"
     version="1.1"
     baseProfile="full"
@@ -67,6 +74,8 @@ const upcomingSessions: Session[] = [
     status: "Scheduled",
     studentsEnrolled: 12,
     gameType: "Chess",
+    sessionMode: "In-Person",
+    sessionType: "Group",
   },
   {
     id: "2",
@@ -78,6 +87,8 @@ const upcomingSessions: Session[] = [
     status: "Scheduled",
     studentsEnrolled: 8,
     gameType: "Scrabble",
+    sessionMode: "In-Person",
+    sessionType: "Individual",
   },
   {
     id: "3",
@@ -89,6 +100,8 @@ const upcomingSessions: Session[] = [
     status: "Scheduled",
     studentsEnrolled: 15,
     gameType: "Chess",
+    sessionMode: "Online",
+    sessionType: "Group",
   },
   {
     id: "4",
@@ -100,6 +113,8 @@ const upcomingSessions: Session[] = [
     status: "Scheduled",
     studentsEnrolled: 10,
     gameType: "Scrabble",
+    sessionMode: "In-Person",
+    sessionType: "Group",
   },
   {
     id: "5",
@@ -111,6 +126,8 @@ const upcomingSessions: Session[] = [
     status: "Scheduled",
     studentsEnrolled: 9,
     gameType: "Chess",
+    sessionMode: "In-Person",
+    sessionType: "Individual",
   },
 ];
 
@@ -128,14 +145,32 @@ const SessionCard = ({
         index !== 0 ? "border-t border-neutral-200/60" : ""
       )}
     >
-      <p className="text-neutral-700 font-medium tracking-tight">
+      <p className="text-neutral-700 font-semibold tracking-tight">
         {session.title}
       </p>
 
-      <p className="text-xs px-2 py-1 my-2 bg-neutral-100 border max-w-fit rounded flex items-center gap-1.5 font-medium">
-        {session.gameType === "Chess" ? ChessSvg : ScrabbleSvg}
-        {session.gameType}
-      </p>
+      <div className="flex gap-1 items-center">
+        <p className="text-xs px-2 py-1 my-2 bg-neutral-100 border max-w-fit rounded flex items-center gap-1.5 font-medium">
+          {session.gameType === "Chess" ? ChessSvg : ScrabbleSvg}
+          {session.gameType}
+        </p>
+        <p className="text-xs px-2 py-1 my-2 bg-neutral-100 border max-w-fit rounded flex items-center gap-1.5 font-medium">
+          {session.sessionMode === "Online" ? (
+            <Webcam size={14} />
+          ) : (
+            <MapPin size={14} />
+          )}
+          {session.sessionMode}
+        </p>{" "}
+        <p className="text-xs px-2 py-1 my-2 bg-neutral-100 border max-w-fit rounded flex items-center gap-1.5 font-medium">
+          {session.sessionType === "Group" ? (
+            <UsersRound size={14} />
+          ) : (
+            <UserRound size={14} />
+          )}
+          {session.sessionType}
+        </p>
+      </div>
 
       <div className="flex text-sm items-center gap-3 text-neutral-500">
         <div className="flex items-center gap-1.5">
@@ -159,12 +194,19 @@ const SessionCard = ({
           {session.studentsEnrolled}
         </span>
       </div>
-      <a
+      {/* <a
         href=""
-        className="mt-2 underline text-sm text-blue-500 flex items-center"
+        className="mt-2 text-sm text-orange-500 font-medium underline flex items-center"
       >
         more details
         <ArrowUpRight size={12} />
+      </a> */}
+      <a
+        href=""
+        className="mt-2 text-sm px-3 bg-neutral-200 max-w-fit py-1 rounded font-medium flex items-center"
+      >
+        more details
+        <ArrowUpRight strokeWidth="3" size={12} />
       </a>
     </div>
   );
@@ -174,11 +216,12 @@ const UpcomingSessions = () => {
   const [activeGame, setActiveGame] = useState("scrabble");
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className=" text-xl font-medium text-black mb-6">Upcoming sessions</h1>
+    <div className="w-full border rounded-md bg-white">
+      <div className="p-4 border-b flex items-center justify-between text-blue-500">
+        <h1 className=" font-semibold ">Upcoming sessions</h1>
+        <ChevronRight size={14} strokeWidth={4}  />
       </div>
-      <div className="flex flex-col  relative bg-white    p-2 border border-neutral-200 rounded-md">
+      <div className="flex flex-col  relative bg-white  p-2  rounded-md">
         {upcomingSessions.map((session, index) => {
           return <SessionCard session={session} key={index} index={index} />;
         })}

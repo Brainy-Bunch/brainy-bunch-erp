@@ -12,11 +12,10 @@ const Dashboard = () => {
     <div className=" pb-20">
       <Header role={user.user?.role || ""} />
       <div className="px-4">
-        <div className="mt-6 space-y-12">
+        <div className="mt-6 space-y-6">
           <SessionsMetrics />
-
           {/* upcoming classes */}
-          {/* <UpcomingSessions /> */}
+          <UpcomingSessions />
         </div>
       </div>
     </div>

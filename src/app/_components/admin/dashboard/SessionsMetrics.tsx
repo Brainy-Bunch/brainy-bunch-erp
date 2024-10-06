@@ -13,9 +13,9 @@ const SessionsMetrics = () => {
   return (
     <div className="space-y-3">
       <div className="w-full border rounded-md bg-white">
-        <div className="p-4 border-b flex items-center justify-between">
-          <h1 className=" font-semibold text-black">Training sessions</h1>
-          <ChevronRight size={14} />
+        <div className="p-4 border-b flex text-blue-500 items-center justify-between">
+          <h1 className=" font-semibold">Training sessions</h1>
+          <ChevronRight size={14} strokeWidth={4} />
         </div>
 
         <div className=" py-4 flex flex-col gap-4">
