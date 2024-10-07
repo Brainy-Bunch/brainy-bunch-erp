@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -10,53 +10,147 @@ import {
 
 import { ChevronRight } from "lucide-react";
 
-
 // * configs yo
+const clientAcquisitionConfig = {
+  coding: {
+    label: "coding",
+    color: "#FFF100",
+  },
+  chess: {
+    label: "chess",
+    color: "#00ac47",
+  },
+  scrabble: {
+    label: "scrabble",
+    color: "#f4a462",
+  },
+} satisfies ChartConfig;
 
 const clientAcquisitionData = [
-    {
-      month: "January",
-      chess: 15,
-      coding: 20,
-      scrabble: 10,
-    },
-    {
-      month: "February",
-      chess: 18,
-      coding: 25,
-      scrabble: 12,
-    },
-    {
-      month: "March",
-      chess: 20,
-      coding: 22,
-      scrabble: 15,
-    },
-    {
-      month: "April",
-      chess: 25,
-      coding: 30,
-      scrabble: 18,
-    },
-    {
-      month: "May",
-      chess: 28,
-      coding: 35,
-      scrabble: 20,
-    },
-    {
-      month: "June",
-      chess: 30,
-      coding: 40,
-      scrabble: 22,
-    },
-  ];
-  
-
+  {
+    month: "January",
+    chess: 15,
+    coding: 20,
+    scrabble: 10,
+  },
+  {
+    month: "February",
+    chess: 18,
+    coding: 25,
+    scrabble: 12,
+  },
+  {
+    month: "March",
+    chess: 20,
+    coding: 22,
+    scrabble: 15,
+  },
+  {
+    month: "April",
+    chess: 25,
+    coding: 30,
+    scrabble: 18,
+  },
+  {
+    month: "May",
+    chess: 28,
+    coding: 35,
+    scrabble: 20,
+  },
+  {
+    month: "June",
+    chess: 30,
+    coding: 40,
+    scrabble: 22,
+  },
+];
 
 const ClientAcquisitionChart = () => {
-    return ()
-}
+  return (
+    <ChartContainer
+      className="min-h-[350px] max-w-full"
+      config={clientAcquisitionConfig}
+    >
+      <LineChart
+        accessibilityLayer
+        data={clientAcquisitionData}
+        margin={{
+          top: 20,
+          left: 12,
+          right: 12,
+        }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Line
+          dataKey="chess"
+          type="natural"
+          stroke="#00ac47"
+          strokeWidth={2}
+          dot={{
+            fill: "#00ac47",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+        <Line
+          dataKey="scrabble"
+          type="natural"
+          stroke="#f4a462"
+          strokeWidth={2}
+          dot={{
+            fill: "#f4a462",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+        <Line
+          dataKey="coding"
+          type="natural"
+          stroke="#FFF100"
+          strokeWidth={2}
+          dot={{
+            fill: "#FFF100",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+      </LineChart>
+    </ChartContainer>
+  );
+};
 
 const ClientMetrics = () => {
   return (
@@ -65,7 +159,7 @@ const ClientMetrics = () => {
         <h1 className=" font-semibold ">Clients</h1>
         <ChevronRight size={14} strokeWidth={4} />
       </div>
-      <div className="p-4 flex flex-col gap-3 border-t">
+      <div className="p-4 flex flex-col gap-3">
         <div className="">
           <h1 className="font-medium mb-1">Client Acquisition</h1>
           <p className="text-sm text-neutral-500 mb-3">
@@ -74,6 +168,7 @@ const ClientMetrics = () => {
           </p>
         </div>
         <div>
+          <ClientAcquisitionChart />
           <p className="mt-2 text-neutral-400 w-ful text-right text-sm">
             Updated 2m ago
           </p>
