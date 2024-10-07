@@ -26,6 +26,22 @@ const clientAcquisitionConfig = {
   },
 } satisfies ChartConfig;
 
+const clientRetentionConfig = {
+  coding: {
+    label: "coding",
+    color: "#FFF100",
+  },
+  chess: {
+    label: "chess",
+    color: "#00ac47",
+  },
+  scrabble: {
+    label: "scrabble",
+    color: "#f4a462",
+  },
+} satisfies ChartConfig;
+
+// * data yo
 const clientAcquisitionData = [
   {
     month: "January",
@@ -64,7 +80,46 @@ const clientAcquisitionData = [
     scrabble: 22,
   },
 ];
+const clientRetentionData = [
+  {
+    month: "January",
+    chess: 12, // Number of clients retained
+    coding: 1,
+    scrabble: 8,
+  },
+  {
+    month: "February",
+    chess: 15,
+    coding: 22,
+    scrabble: 9,
+  },
+  {
+    month: "March",
+    chess: 16,
+    coding: 20,
+    scrabble: 11,
+  },
+  {
+    month: "April",
+    chess: 22,
+    coding: 26,
+    scrabble: 14,
+  },
+  {
+    month: "May",
+    chess: 25,
+    coding: 30,
+    scrabble: 16,
+  },
+  {
+    month: "June",
+    chess: 27,
+    coding: 34,
+    scrabble: 18,
+  },
+];
 
+// * components
 const ClientAcquisitionChart = () => {
   return (
     <ChartContainer
@@ -74,6 +129,93 @@ const ClientAcquisitionChart = () => {
       <LineChart
         accessibilityLayer
         data={clientAcquisitionData}
+        margin={{
+          top: 20,
+          left: 12,
+          right: 12,
+        }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Line
+          dataKey="chess"
+          type="natural"
+          stroke="#00ac47"
+          strokeWidth={2}
+          dot={{
+            fill: "#00ac47",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+        <Line
+          dataKey="scrabble"
+          type="natural"
+          stroke="#f4a462"
+          strokeWidth={2}
+          dot={{
+            fill: "#f4a462",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+        <Line
+          dataKey="coding"
+          type="natural"
+          stroke="#FFF100"
+          strokeWidth={2}
+          dot={{
+            fill: "#FFF100",
+          }}
+          activeDot={{
+            r: 6,
+          }}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Line>
+      </LineChart>
+    </ChartContainer>
+  );
+};
+
+const ClientRetentionChart = () => {
+  return (
+    <ChartContainer
+      className="min-h-[350px] max-w-full"
+      config={clientRetentionConfig}
+    >
+      <LineChart
+        accessibilityLayer
+        data={clientRetentionData}
         margin={{
           top: 20,
           left: 12,
@@ -169,6 +311,20 @@ const ClientMetrics = () => {
         </div>
         <div>
           <ClientAcquisitionChart />
+          <p className="mt-2 text-neutral-400 w-ful text-right text-sm">
+            Updated 2m ago
+          </p>
+        </div>
+      </div>
+      <div className="p-4 flex flex-col gap-3 border-t">
+        <div className="">
+          <h1 className="font-medium mb-1">Client Retention</h1>
+          <p className="text-sm text-neutral-500 mb-3">
+            Tracks client engagement over time, highlighting retention trends.
+          </p>
+        </div>
+        <div>
+          <ClientRetentionChart />
           <p className="mt-2 text-neutral-400 w-ful text-right text-sm">
             Updated 2m ago
           </p>
