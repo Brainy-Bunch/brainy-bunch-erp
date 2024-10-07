@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 
 // charts
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -201,9 +201,13 @@ const ActivityChart = ({
   fill: string;
 }) => {
   return (
-    <ChartContainer className="min-h-[350px] max-w-full" config={chartConfig}>
+    <ChartContainer
+      className="min-h-[350px] mt-10 max-w-full"
+      config={chartConfig}
+    >
       <BarChart accessibilityLayer data={data[activity as ActivityType]}>
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={10} width={25} />
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -262,11 +266,13 @@ const ComparisonChart = ({}) => {
   console.log(allData);
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full"
+      className="min-h-[350px] mt-10 max-w-full"
       config={comparisonChartConfig}
     >
       <BarChart accessibilityLayer data={allData}>
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={10} width={25} />
+
         <XAxis
           dataKey="month"
           tickLine={false}

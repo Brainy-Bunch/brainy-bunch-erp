@@ -1,4 +1,11 @@
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
+import {
+  CartesianGrid,
+  LabelList,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -123,7 +130,7 @@ const clientRetentionData = [
 const ClientAcquisitionChart = () => {
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full"
+      className="min-h-[350px] max-w-full mt-5"
       config={clientAcquisitionConfig}
     >
       <LineChart
@@ -136,6 +143,8 @@ const ClientAcquisitionChart = () => {
         }}
       >
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={20} width={30} />
+
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -156,14 +165,7 @@ const ClientAcquisitionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
         <Line
           dataKey="scrabble"
           type="natural"
@@ -175,14 +177,7 @@ const ClientAcquisitionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
         <Line
           dataKey="coding"
           type="natural"
@@ -194,14 +189,7 @@ const ClientAcquisitionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
       </LineChart>
     </ChartContainer>
   );
@@ -210,7 +198,7 @@ const ClientAcquisitionChart = () => {
 const ClientRetentionChart = () => {
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full"
+      className="min-h-[350px] max-w-full mt-5"
       config={clientRetentionConfig}
     >
       <LineChart
@@ -223,6 +211,7 @@ const ClientRetentionChart = () => {
         }}
       >
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={20} width={30} />
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -243,14 +232,7 @@ const ClientRetentionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
         <Line
           dataKey="scrabble"
           type="natural"
@@ -262,14 +244,7 @@ const ClientRetentionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
         <Line
           dataKey="coding"
           type="natural"
@@ -281,14 +256,7 @@ const ClientRetentionChart = () => {
           activeDot={{
             r: 6,
           }}
-        >
-          <LabelList
-            position="top"
-            offset={12}
-            className="fill-foreground"
-            fontSize={12}
-          />
-        </Line>
+        />
       </LineChart>
     </ChartContainer>
   );

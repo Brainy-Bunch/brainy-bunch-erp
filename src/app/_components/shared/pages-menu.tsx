@@ -42,7 +42,7 @@ const PagesNavigation = () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none ring-transparent">
           <div className="flex items-center gap-2">
-            <p className="text-base">{page}</p>
+            <p className="text-base text-neutral-600">{page}</p>
             <ChevronsUpDown size={14} />
           </div>
         </DropdownMenuTrigger>

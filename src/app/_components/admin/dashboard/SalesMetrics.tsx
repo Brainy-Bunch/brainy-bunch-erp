@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -254,11 +254,13 @@ const getGProfit = (arr: any) => {
 const TotalSalesChart = () => {
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full"
+      className="min-h-[350px] max-w-full mt-5"
       config={totalSalesChartConfig}
     >
       <BarChart accessibilityLayer data={salesData}>
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={10} width={25} />
+
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -292,11 +294,13 @@ const TotalRevenueChart = () => {
   console.log(RevenueData);
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full"
+      className="min-h-[350px] mt-5 max-w-full"
       config={totalRevenueChartConfig}
     >
       <BarChart accessibilityLayer data={RevenueData}>
         <CartesianGrid vertical={false} />
+        <YAxis tickLine={false} axisLine={false} tickMargin={1} width={40} className="min-w-fit" />
+
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -353,9 +357,11 @@ const GPMarginChart = () => {
 
   return (
     <div className="">
-      <ChartContainer className="min-h-[350px] max-w-full" config={config}>
+      <ChartContainer className="min-h-[350px] max-w-full mt-5" config={config}>
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
+          <YAxis tickLine={false} axisLine={false} tickMargin={1} width={35} className="min-w-fit" />
+
           <XAxis
             dataKey="month"
             tickLine={false}
