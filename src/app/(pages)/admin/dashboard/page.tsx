@@ -3,6 +3,7 @@
 import ClientMetrics from "@/app/_components/admin/dashboard/ClientMetrics";
 import CoachMetrics from "@/app/_components/admin/dashboard/CoachesMetrics";
 import GameParticipation from "@/app/_components/admin/dashboard/GameParticipation";
+import OperatingExpenses from "@/app/_components/admin/dashboard/OperatingExpenses";
 import SalesMetrics from "@/app/_components/admin/dashboard/SalesMetrics";
 import SessionsMetrics from "@/app/_components/admin/dashboard/SessionsMetrics";
 import UpcomingSessions from "@/app/_components/admin/dashboard/upcoming-sessions";
@@ -22,6 +23,7 @@ const Dashboard = () => {
           <CoachMetrics />
           <SalesMetrics />
           <ClientMetrics />
+          <OperatingExpenses />
         </div>
       </div>
     </div>
