@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer utilities {
   .text-balance {
@@ -74,23 +72,28 @@
   }
 }
 
-*{
-  font-family:  'Inter';
+* {
+  font-family: "Inter";
 }
-
 
 /* auth */
 
 .auth-page {
-  @apply w-full pt-20 p-4
+  @apply w-full pt-20 p-4;
 }
 
 .auth-form {
-  @apply w-full max-w-sm p-4 rounded-lg m-auto
+  @apply w-full max-w-sm p-4 rounded-lg m-auto;
 }
 
 .auth-btn {
-  @apply w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold
+  @apply w-full mt-3 py-6 flex items-center gap-1.5 bg-orange-500 active:bg-orange-600 hover:bg-orange-600 disabled:bg-orange-400 font-semibold;
 }
 
 /* w-full border max-w-sm p-4 pb-0 rounded-lg bg-white shadow */
+
+/* dashboard widgets */
+
+.widget_subheading {
+  @apply font-medium mb-1 lg:text-base lg:font-semibold;
+}

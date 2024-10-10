@@ -1,11 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpRight,
-  ChevronRight,
-  Minus,
-} from "lucide-react";
+
 import { useState } from "react";
 
 // charts
@@ -18,6 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import WidgetLayout from "./WidgetLayout";
 
 // TYPES YO
 type ActivityData = { month: string } & {
@@ -75,6 +70,48 @@ const chartDataScrabble = [
     cancelledClasses: 0,
     totalHours: 42,
   },
+  {
+    month: "July",
+    scrabble: 9,
+    completedClasses: 8,
+    cancelledClasses: 1,
+    totalHours: 50,
+  },
+  {
+    month: "August",
+    scrabble: 6,
+    completedClasses: 6,
+    cancelledClasses: 0,
+    totalHours: 55,
+  },
+  {
+    month: "September",
+    scrabble: 8,
+    completedClasses: 7,
+    cancelledClasses: 1,
+    totalHours: 62,
+  },
+  {
+    month: "October",
+    scrabble: 10,
+    completedClasses: 10,
+    cancelledClasses: 0,
+    totalHours: 68,
+  },
+  {
+    month: "November",
+    scrabble: 5,
+    completedClasses: 4,
+    cancelledClasses: 1,
+    totalHours: 30,
+  },
+  {
+    month: "December",
+    scrabble: 7,
+    completedClasses: 7,
+    cancelledClasses: 0,
+    totalHours: 40,
+  },
 ];
 
 const chartDataChess = [
@@ -119,6 +156,48 @@ const chartDataChess = [
     completedClasses: 5,
     cancelledClasses: 0,
     totalHours: 42,
+  },
+  {
+    month: "July",
+    chess: 8,
+    completedClasses: 7,
+    cancelledClasses: 1,
+    totalHours: 55,
+  },
+  {
+    month: "August",
+    chess: 9,
+    completedClasses: 9,
+    cancelledClasses: 0,
+    totalHours: 60,
+  },
+  {
+    month: "September",
+    chess: 6,
+    completedClasses: 6,
+    cancelledClasses: 0,
+    totalHours: 40,
+  },
+  {
+    month: "October",
+    chess: 11,
+    completedClasses: 10,
+    cancelledClasses: 1,
+    totalHours: 80,
+  },
+  {
+    month: "November",
+    chess: 4,
+    completedClasses: 4,
+    cancelledClasses: 0,
+    totalHours: 24,
+  },
+  {
+    month: "December",
+    chess: 6,
+    completedClasses: 6,
+    cancelledClasses: 0,
+    totalHours: 35,
   },
 ];
 
@@ -165,6 +244,48 @@ const chartDataCoding = [
     cancelledClasses: 1,
     totalHours: 231,
   },
+  {
+    month: "July",
+    coding: 5,
+    completedClasses: 4,
+    cancelledClasses: 1,
+    totalHours: 200,
+  },
+  {
+    month: "August",
+    coding: 8,
+    completedClasses: 7,
+    cancelledClasses: 1,
+    totalHours: 190,
+  },
+  {
+    month: "September",
+    coding: 7,
+    completedClasses: 6,
+    cancelledClasses: 1,
+    totalHours: 220,
+  },
+  {
+    month: "October",
+    coding: 9,
+    completedClasses: 8,
+    cancelledClasses: 1,
+    totalHours: 250,
+  },
+  {
+    month: "November",
+    coding: 4,
+    completedClasses: 3,
+    cancelledClasses: 1,
+    totalHours: 150,
+  },
+  {
+    month: "December",
+    coding: 6,
+    completedClasses: 5,
+    cancelledClasses: 1,
+    totalHours: 180,
+  },
 ];
 
 const chartConfig = {
@@ -209,14 +330,16 @@ const ActivityChart = ({
         <CartesianGrid vertical={false} />
         <YAxis tickLine={false} axisLine={false} tickMargin={10} width={25} />
         <XAxis
+          width={40}
           dataKey="month"
           tickLine={false}
           tickMargin={10}
+          className="lg:text-sm"
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
         <Bar
           dataKey="completedClasses"
           stackId="a"
@@ -276,6 +399,7 @@ const ComparisonChart = ({}) => {
         <XAxis
           dataKey="month"
           tickLine={false}
+          className="lg:text-sm"
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
@@ -284,7 +408,7 @@ const ComparisonChart = ({}) => {
           cursor={false}
           content={<ChartTooltipContent indicator="dashed" />}
         />
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
 
         <Bar dataKey="completedClassesScrabble" fill="#f4a462" radius={4} />
         <Bar dataKey="completedClassesChess" fill="#87A2FF" radius={4} />
@@ -322,20 +446,15 @@ const SessionsMetrics = () => {
   );
 
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Training sessions</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
-
+    <WidgetLayout title="Training sessions" link="">
       <div className="p-4 flex flex-col gap-3">
         <div className="">
-          <h1 className=" font-medium mb-1">Total sessions</h1>
+          <h1 className="widget_subheading">Total sessions</h1>
           <p className="text-sm text-neutral-500 mb-3">
             Cumulative number of monthly sessions held across all activities
           </p>
           <div
-            className="w-full border h-10 grid rounded grid-cols-3 p-1"
+            className="w-full lg:w-72 border h-9 grid rounded grid-cols-3 p-1"
             style={{
               gridTemplateColumns: `repeat(${availableActivities.length}, minmax(0, 1fr))`,
             }}
@@ -348,7 +467,7 @@ const SessionsMetrics = () => {
                   className={cn(
                     "text-sm rounded",
                     activeActivity === activity
-                      ? "bg-neutral-100 text-neutral-800 font-medium"
+                      ? "bg-neutral-100 lg:bg-neutral-200/70 text-neutral-800 font-medium"
                       : "text-neutral-500"
                   )}
                 >
@@ -370,7 +489,7 @@ const SessionsMetrics = () => {
       </div>
 
       <div className="p-4 flex flex-col gap-1">
-        <div className="bg-neutral-50 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+        <div className="bg-neutral-50 lg:bg-neutral-100 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div
               className="size-2 rounded-full"
@@ -391,7 +510,7 @@ const SessionsMetrics = () => {
             {completedClasses.toLocaleString()}
           </p>
         </div>
-        <div className="bg-neutral-50 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+        <div className="bg-neutral-50 lg:bg-neutral-100 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="size-2 rounded-full bg-red-500" />
             <p className="font-medium">Cancelled sessions</p>
@@ -405,7 +524,7 @@ const SessionsMetrics = () => {
       <hr />
       <div className="p-4">
         {" "}
-        <h1 className=" font-medium mb-1">Sessions comparison</h1>
+        <h1 className="widget_subheading">Sessions comparison</h1>
         <p className="text-sm text-neutral-500 mb-3">
           Comparison of <b>completed classes</b> for all activities
         </p>
@@ -416,7 +535,7 @@ const SessionsMetrics = () => {
           </p>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ArrowUpDown, ChevronRight, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+import WidgetLayout from "./WidgetLayout";
 
 const coachesData = [
   {
@@ -76,20 +77,16 @@ const CoachMetrics = () => {
 
   const [activeDuration, setActiveDUration] = useState("week");
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Coach metrics</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
+    <WidgetLayout title="Coaches Metrics" link="">
       {/* tabs */}
-      <div className="w-full p-4 pb-2">
-        <div className="w-full h-10 p-1 grid grid-cols-2  border rounded">
+      <div className="w-full lg:w-72 p-4 pb-2">
+        <div className="w-full h-9 p-1 grid grid-cols-2  border rounded">
           <button
             onClick={() => setActiveDUration("week")}
             className={cn(
               "text-sm  rounded",
               activeDuration === "week"
-                ? "bg-neutral-100 text-neutral-800 font-medium"
+                ? "bg-neutral-100 lg:bg-neutral-200/70 text-neutral-800 font-medium"
                 : "text-neutral-500"
             )}
           >
@@ -129,11 +126,13 @@ const CoachMetrics = () => {
                 key={index}
                 className={cn(
                   "w-full p-2  grid grid-cols-3 text-[14px] font-medium",
-                  index % 2 === 0 ? "bg-neutral-50" : "bg-white"
+                  index % 2 === 0
+                    ? "bg-slate-100"
+                    : "bg-white"
                 )}
               >
                 <div className="w-full font-medium">
-                  <p>
+                  <p className="underline">
                     {coach.firstName} {coach.lastName.slice(0, 1)}.
                   </p>
                 </div>
@@ -155,7 +154,7 @@ const CoachMetrics = () => {
             </div>
             <p className="text-neutral-600">{coachCount}</p>
           </div>
-          <div className="bg-neutral-100 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+          <div className=" text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <div className="size-2 rounded-full bg-blue-500" />
               <p className="font-medium">Amount billable</p>
@@ -171,7 +170,7 @@ const CoachMetrics = () => {
           </div>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

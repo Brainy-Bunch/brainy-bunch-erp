@@ -10,6 +10,7 @@ import {
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { PRODUCT_COLORS } from "@/app/utils/firebase/constants";
 
 const products = ["books", "bands", "boards", "merch"];
 
@@ -17,73 +18,73 @@ const products = ["books", "bands", "boards", "merch"];
 const totalSalesChartConfig = {
   books: {
     label: "Books",
-    color: "red",
+    color: PRODUCT_COLORS.books,
   },
   bands: {
     label: "Bands",
-    color: "black",
+    color: PRODUCT_COLORS.bands,
   },
   boards: {
     label: "Boards",
-    color: "green",
+    color: PRODUCT_COLORS.boards,
   },
   merch: {
     label: "Merch",
-    color: "blue",
+    color: PRODUCT_COLORS.merch,
   },
 } satisfies ChartConfig;
 const totalRevenueChartConfig = {
   booksRevenue: {
     label: "Books",
-    color: "red",
+    color: PRODUCT_COLORS.books,
   },
   bandsRevenue: {
     label: "Bands",
-    color: "black",
+    color: PRODUCT_COLORS.bands,
   },
   boardsRevenue: {
     label: "Boards",
-    color: "green",
+    color: PRODUCT_COLORS.boards,
   },
   merchRevenue: {
     label: "Merch",
-    color: "blue",
+    color: PRODUCT_COLORS.merch,
   },
 } satisfies ChartConfig;
 const totalGPMarginChartConfig = {
   booksGPMargin: {
     label: "Books",
-    color: "#FFF100",
+    color: PRODUCT_COLORS.books,
   },
   bandsGPMargin: {
     label: "Bands",
-    color: "#00ac47",
+    color: PRODUCT_COLORS.bands,
   },
   boardsGPMargin: {
     label: "Boards",
-    color: "#f4a462",
+    color: PRODUCT_COLORS.boards,
   },
   merchGPMargin: {
     label: "Merch",
-    color: "#87A2FF",
+    color: PRODUCT_COLORS.merch,
   },
 } satisfies ChartConfig;
 const totalGProfitChartConfig = {
   booksGProfit: {
     label: "Books",
-    color: "#FFF100",
+    color: PRODUCT_COLORS.books,
   },
   bandsGProfit: {
     label: "Bands",
-    color: "#00ac47",
+    color: PRODUCT_COLORS.bands,
   },
   boardsGProfit: {
     label: "Boards",
-    color: "#f4a462",
+    color: PRODUCT_COLORS.boards,
   },
   merchGProfit: {
     label: "Merch",
-    color: "#87A2FF",
+    color: PRODUCT_COLORS.merch,
   },
 } satisfies ChartConfig;
 
@@ -128,6 +129,13 @@ const salesData = [
     books: 40,
     bands: 4,
     merch: 0,
+    boards: 5,
+  },
+  {
+    month: "July",
+    books: 24,
+    bands: 41,
+    merch: 10,
     boards: 5,
   },
 ];
@@ -254,7 +262,7 @@ const getGProfit = (arr: any) => {
 const TotalSalesChart = () => {
   return (
     <ChartContainer
-      className="min-h-[350px] max-w-full mt-5"
+      className="min-h-[350px] lg:h-[200px] w-full  max-w-full mt-5"
       config={totalSalesChartConfig}
     >
       <BarChart accessibilityLayer data={salesData}>
@@ -262,6 +270,7 @@ const TotalSalesChart = () => {
         <YAxis tickLine={false} axisLine={false} tickMargin={10} width={25} />
 
         <XAxis
+          width={20}
           dataKey="month"
           tickLine={false}
           tickMargin={10}
@@ -270,20 +279,10 @@ const TotalSalesChart = () => {
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar
-          dataKey="bands"
-          stackId="a"
-          fill={"#00ac47"}
-          radius={[4, 4, 4, 4]}
-        />
-        <Bar dataKey="merch" stackId="a" fill="#87A2FF" radius={[4, 4, 4, 4]} />
-        <Bar dataKey="books" stackId="a" fill="#FFF100" radius={[4, 4, 4, 4]} />
-        <Bar
-          dataKey="boards"
-          stackId="a"
-          fill="#f4a462"
-          radius={[4, 4, 4, 4]}
-        />
+        <Bar barSize={50} dataKey="bands" stackId="a" fill={PRODUCT_COLORS.bands} />
+        <Bar barSize={50} dataKey="merch" stackId="a" fill={PRODUCT_COLORS.merch} />
+        <Bar barSize={50} dataKey="books" stackId="a" fill={PRODUCT_COLORS.books} />
+        <Bar barSize={50} dataKey="boards" stackId="a" fill={PRODUCT_COLORS.boards} />
       </BarChart>
     </ChartContainer>
   );
@@ -299,7 +298,13 @@ const TotalRevenueChart = () => {
     >
       <BarChart accessibilityLayer data={RevenueData}>
         <CartesianGrid vertical={false} />
-        <YAxis tickLine={false} axisLine={false} tickMargin={1} width={40} className="min-w-fit" />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          tickMargin={1}
+          width={40}
+          className="min-w-fit"
+        />
 
         <XAxis
           dataKey="month"
@@ -360,7 +365,13 @@ const GPMarginChart = () => {
       <ChartContainer className="min-h-[350px] max-w-full mt-5" config={config}>
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
-          <YAxis tickLine={false} axisLine={false} tickMargin={1} width={35} className="min-w-fit" />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickMargin={1}
+            width={35}
+            className="min-w-fit"
+          />
 
           <XAxis
             dataKey="month"

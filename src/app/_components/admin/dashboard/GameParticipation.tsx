@@ -6,22 +6,29 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import WidgetLayout from "./WidgetLayout";
+import { ACTIVITY_COLORS } from "@/app/utils/firebase/constants";
 
-const chartData = [{ scrabble: 100, chess: 400 }];
+const chartData = [{ scrabble: 100, chess: 400, coding: 340 }];
 
 const chartConfig = {
   scrabble: {
     label: "Scrabble",
-    color: "red",
+    color: ACTIVITY_COLORS.scrabble,
   },
   chess: {
     label: "Chess",
-    color: "black",
+    color: ACTIVITY_COLORS.chess,
+  },
+  coding: {
+    label: "Coding",
+    color: ACTIVITY_COLORS.coding,
   },
 } satisfies ChartConfig;
 
 const RadialChart = () => {
-  const totalPlayers = chartData[0].scrabble + chartData[0].chess;
+  const totalPlayers =
+    chartData[0].scrabble + chartData[0].chess + chartData[0].coding;
 
   return (
     <ChartContainer
@@ -68,12 +75,19 @@ const RadialChart = () => {
           dataKey="scrabble"
           stackId="a"
           cornerRadius={7}
-          fill="red"
+          fill={ACTIVITY_COLORS.scrabble}
           className="stroke-white stroke-2"
         />
         <RadialBar
           dataKey="chess"
-          fill="black"
+          fill={ACTIVITY_COLORS.chess}
+          stackId="a"
+          cornerRadius={7}
+          className="stroke-white stroke-2"
+        />
+        <RadialBar
+          dataKey="coding"
+          fill={ACTIVITY_COLORS.coding}
           stackId="a"
           cornerRadius={7}
           className="stroke-white stroke-2"
@@ -85,50 +99,53 @@ const RadialChart = () => {
 
 const GameParticipation = () => {
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Player segmentation</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
+    <WidgetLayout title="Activity Segmentation" link="">
       <div className="w-full py-4 flex flex-col ">
         <div className="px-4">
-          <p className="tracking-tight font-semibold text-neutral-700 ">Total Players</p>
+          <p className="widget_subheading">Total Players</p>
           <small className="text-neutral-400 font-semibold">
             January - June 2024
           </small>
         </div>
-        <div className="w-full ">
-          <RadialChart />
-        </div>
-        <div className="w-full px-4 flex flex-col gap-1">
-          <div className="flex items-center p-3 rounded-lg bg-neutral-100 justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 rounded-full h-5 bg-neutral-800" />
-              <p className="font-bold tracking-tight">{chartData[0].chess}</p>
-              <div className="flex items-center text-green-500">
-                <ArrowUp strokeWidth={4} size={10} />
-                <p className="text-sm font-bold">30%</p>
-              </div>
-            </div>
-            <p className="text-sm font-semibold">Chess players</p>
+        <div className="flex flex-col lg:grid lg:grid-cols-4">
+          <div className="w-full lg:col-span-2">
+            <RadialChart />
           </div>
-          <div className="flex items-center p-3 rounded-lg bg-red-50 justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 rounded-full h-5 bg-red-400" />
-
-              <p className="font-bold tracking-tight">
-                {chartData[0].scrabble}
-              </p>
-              <div className="flex items-center text-red-500">
-                <ArrowDown strokeWidth={4} size={10} />
-                <p className="text-sm font-bold">10%</p>
+          <div className="w-full px-4 lg:pl-0 lg:col-span-2 flex flex-col lg:justify-center gap-1">
+            <div className="bg-neutral-50 lg:bg-neutral-100 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <div
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: ACTIVITY_COLORS.chess }}
+                />
+                <p className="font-medium">Chess </p>
               </div>
-            </div>{" "}
-            <p className="text-sm font-semibold">Scrabble players</p>
+              <p className="text-neutral-700">{chartData[0].chess}</p>
+            </div>
+            <div className="text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <div
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: ACTIVITY_COLORS.scrabble }}
+                />
+                <p className="font-medium">Scrabble </p>
+              </div>
+              <p className="text-neutral-700">{chartData[0].scrabble}</p>
+            </div>
+            <div className="bg-neutral-50 lg:bg-neutral-100 text-sm w-full p-3 rounded-lg flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <div
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: ACTIVITY_COLORS.coding }}
+                />
+                <p className="font-medium">Coding</p>
+              </div>
+              <p className="text-neutral-700">{chartData[0].coding}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

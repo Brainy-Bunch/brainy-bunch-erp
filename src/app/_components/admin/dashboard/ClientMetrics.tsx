@@ -16,35 +16,37 @@ import {
 } from "@/components/ui/chart";
 
 import { ChevronRight } from "lucide-react";
+import WidgetLayout from "./WidgetLayout";
+import { ACTIVITY_COLORS } from "@/app/utils/firebase/constants";
 
 // * configs yo
 const clientAcquisitionConfig = {
   coding: {
     label: "coding",
-    color: "#FFF100",
+    color: ACTIVITY_COLORS.coding,
   },
   chess: {
     label: "chess",
-    color: "#00ac47",
+    color: ACTIVITY_COLORS.chess,
   },
   scrabble: {
     label: "scrabble",
-    color: "#f4a462",
+    color: ACTIVITY_COLORS.scrabble,
   },
 } satisfies ChartConfig;
 
 const clientRetentionConfig = {
   coding: {
     label: "coding",
-    color: "#FFF100",
+    color: ACTIVITY_COLORS.coding,
   },
   chess: {
     label: "chess",
-    color: "#00ac47",
+    color: ACTIVITY_COLORS.chess,
   },
   scrabble: {
     label: "scrabble",
-    color: "#f4a462",
+    color: ACTIVITY_COLORS.scrabble,
   },
 } satisfies ChartConfig;
 
@@ -149,11 +151,12 @@ const ClientAcquisitionChart = () => {
           dataKey="month"
           tickLine={false}
           axisLine={false}
+          className="lg:text-sm"
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
         <Line
           dataKey="chess"
           type="natural"
@@ -217,17 +220,18 @@ const ClientRetentionChart = () => {
           tickLine={false}
           axisLine={false}
           tickMargin={8}
+          className="lg:text-sm"
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
         <Line
           dataKey="chess"
           type="natural"
-          stroke="#00ac47"
+          stroke={ACTIVITY_COLORS.chess}
           strokeWidth={2}
           dot={{
-            fill: "#00ac47",
+            fill: ACTIVITY_COLORS.chess,
           }}
           activeDot={{
             r: 6,
@@ -236,10 +240,10 @@ const ClientRetentionChart = () => {
         <Line
           dataKey="scrabble"
           type="natural"
-          stroke="#f4a462"
+          stroke={ACTIVITY_COLORS.scrabble}
           strokeWidth={2}
           dot={{
-            fill: "#f4a462",
+            fill: ACTIVITY_COLORS.scrabble,
           }}
           activeDot={{
             r: 6,
@@ -248,10 +252,10 @@ const ClientRetentionChart = () => {
         <Line
           dataKey="coding"
           type="natural"
-          stroke="#FFF100"
+          stroke={ACTIVITY_COLORS.scrabble}
           strokeWidth={2}
           dot={{
-            fill: "#FFF100",
+            fill: ACTIVITY_COLORS.scrabble,
           }}
           activeDot={{
             r: 6,
@@ -264,11 +268,7 @@ const ClientRetentionChart = () => {
 
 const ClientMetrics = () => {
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Clients</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
+    <WidgetLayout title="Clients" link="">
       <div className="p-4 flex flex-col gap-3">
         <div className="">
           <h1 className="font-medium mb-1">Client Acquisition</h1>
@@ -298,7 +298,7 @@ const ClientMetrics = () => {
           </p>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

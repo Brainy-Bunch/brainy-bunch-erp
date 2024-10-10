@@ -10,25 +10,39 @@ import UpcomingSessions from "@/app/_components/admin/dashboard/upcoming-session
 import Header from "@/app/_components/shared/header";
 import Navigationbar from "@/app/_components/shared/navigation-bar";
 import { useAuth } from "@/app/context/authContext";
+import PageLayout from "../../page-layout";
 
 const Dashboard = () => {
-  const user = useAuth();
   return (
-    <div className=" pb-20">
-      <Header role={user.user?.role || ""} />
-      <Navigationbar />
-      <div className="px-4">
-        <div className="mt-6 space-y-16">
-          {/* <SessionsMetrics />
-          <UpcomingSessions />
-          <GameParticipation />
-          <CoachMetrics />
+    <PageLayout>
+      <div className="px-4 lg:p-0 w-full flex flex-col mx-auto !h-full">
+        <div className="grid gap-1 w-full max-w-6xl lg:py-10 mx-auto">
+          <h1 className="text-[32px] font-semibold tracking-tight">
+            Dashboard overview
+          </h1>
+          <small className="text-neutral-500">
+            View and manage metrics spannig different activities in the
+            organisation
+          </small>
+        </div>
+        <hr />
+        <div className="mt-6 lg:mt-12  lg:space-y-0 max-w-5xl w-full mx-auto lg:grid lg:grid-cols-5 lg:gap-3">
+          <div className="col-span-1"></div>
+          <div className="col-span-4 space-y-8">
+            <SessionsMetrics />
+            <GameParticipation />
+            <CoachMetrics />
+            {/* <UpcomingSessions /> */}
+            <ClientMetrics />
           <SalesMetrics />
-          <ClientMetrics />
+          </div>
+
+          {/* 
+   
           <OperatingExpenses /> */}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
