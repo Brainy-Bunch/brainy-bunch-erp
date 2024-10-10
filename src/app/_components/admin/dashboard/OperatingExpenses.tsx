@@ -17,6 +17,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import WidgetLayout from "./WidgetLayout";
+import { EXPENSE_COLORS } from "@/app/utils/firebase/constants";
 
 // * data
 const expensesData = [
@@ -57,27 +59,27 @@ const expensesData = [
 const totalExpencesChartConfig = {
   salaries: {
     label: "Salaries",
-    color: "#00ac47",
+    color: EXPENSE_COLORS.salaries,
   },
   materials: {
     label: "materials",
-    color: "#87A2FF",
+    color: EXPENSE_COLORS.materials,
   },
   marketing: {
     label: "marketing",
-    color: "#FFF100",
+    color: EXPENSE_COLORS.marketing,
   },
   activities: {
     label: "activities",
-    color: "#f4a462",
+    color: EXPENSE_COLORS.activities,
   },
   transport: {
     label: "transport",
-    color: "#B17457",
+    color: EXPENSE_COLORS.transport,
   },
   miscellaneous: {
     label: "miscellaneous",
-    color: "#257180",
+    color: EXPENSE_COLORS.miscellaneous,
   },
 } satisfies ChartConfig;
 
@@ -119,6 +121,14 @@ const TotalExpencesChart = () => {
     >
       <BarChart accessibilityLayer data={expensesData}>
         <CartesianGrid vertical={false} />
+        <CartesianGrid vertical={false} />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          tickMargin={1}
+          width={35}
+          className="min-w-fit"
+        />
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -128,43 +138,43 @@ const TotalExpencesChart = () => {
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <ChartLegend
-          className="max-w-fit flex flex-wrap"
-          content={<ChartLegendContent className="max-w-fit" />}
+          className="max-w-fit mx-auto flex flex-wrap"
+          content={<ChartLegendContent />}
         />
         <Bar
           dataKey="salaries"
           stackId="a"
-          fill={"#00ac47"}
+          fill={EXPENSE_COLORS.salaries}
           radius={[4, 4, 4, 4]}
         />
         <Bar
           dataKey="materials"
           stackId="b"
-          fill="#87A2FF"
+          fill={EXPENSE_COLORS.materials}
           radius={[4, 4, 4, 4]}
         />
         <Bar
           dataKey="marketing"
           stackId="c"
-          fill="#FFF100"
+          fill={EXPENSE_COLORS.marketing}
           radius={[4, 4, 4, 4]}
         />
         <Bar
           dataKey="activities"
           stackId="d"
-          fill="#f4a462"
+          fill={EXPENSE_COLORS.activities}
           radius={[4, 4, 4, 4]}
         />
         <Bar
           dataKey="miscellaneous"
           stackId="e"
-          fill="#257180"
+          fill={EXPENSE_COLORS.miscellaneous}
           radius={[4, 4, 4, 4]}
         />{" "}
         <Bar
           dataKey="transport"
           stackId="f"
-          fill="#B17457"
+          fill={EXPENSE_COLORS.transport}
           radius={[4, 4, 4, 4]}
         />
       </BarChart>
@@ -224,11 +234,7 @@ const ExpenseGrowthChart = () => {
 
 const OperatingExpenses = () => {
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Operating Costs</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
+    <WidgetLayout title="Operating expenses" link="">
       <div className="p-4 flex flex-col gap-3">
         <div className="">
           <h1 className="font-medium mb-1">Total expences</h1>
@@ -260,7 +266,7 @@ const OperatingExpenses = () => {
           </p>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

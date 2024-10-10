@@ -334,12 +334,12 @@ const ActivityChart = ({
           dataKey="month"
           tickLine={false}
           tickMargin={10}
-          className="lg:text-sm"
+          
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
+        <ChartLegend content={<ChartLegendContent  />} />
         <Bar
           dataKey="completedClasses"
           stackId="a"
@@ -399,7 +399,7 @@ const ComparisonChart = ({}) => {
         <XAxis
           dataKey="month"
           tickLine={false}
-          className="lg:text-sm"
+          
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
@@ -408,7 +408,7 @@ const ComparisonChart = ({}) => {
           cursor={false}
           content={<ChartTooltipContent indicator="dashed" />}
         />
-        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
+        <ChartLegend content={<ChartLegendContent  />} />
 
         <Bar dataKey="completedClassesScrabble" fill="#f4a462" radius={4} />
         <Bar dataKey="completedClassesChess" fill="#87A2FF" radius={4} />

@@ -126,12 +126,11 @@ const CoachMetrics = () => {
                 key={index}
                 className={cn(
                   "w-full p-2  grid grid-cols-3 text-[14px] font-medium",
-                  index % 2 === 0
-                    ? "bg-slate-100"
-                    : "bg-white"
+                  index % 2 === 0 ? "bg-slate-100" : "bg-white"
                 )}
               >
-                <div className="w-full font-medium">
+                <div className="w-full font-medium flex items-center gap-3">
+                  <p>{index + 1}.</p>
                   <p className="underline">
                     {coach.firstName} {coach.lastName.slice(0, 1)}.
                   </p>

@@ -11,6 +11,7 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { PRODUCT_COLORS } from "@/app/utils/firebase/constants";
+import WidgetLayout from "./WidgetLayout";
 
 const products = ["books", "bands", "boards", "merch"];
 
@@ -279,10 +280,30 @@ const TotalSalesChart = () => {
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar barSize={50} dataKey="bands" stackId="a" fill={PRODUCT_COLORS.bands} />
-        <Bar barSize={50} dataKey="merch" stackId="a" fill={PRODUCT_COLORS.merch} />
-        <Bar barSize={50} dataKey="books" stackId="a" fill={PRODUCT_COLORS.books} />
-        <Bar barSize={50} dataKey="boards" stackId="a" fill={PRODUCT_COLORS.boards} />
+        <Bar
+          barSize={50}
+          dataKey="bands"
+          stackId="a"
+          fill={PRODUCT_COLORS.bands}
+        />
+        <Bar
+          barSize={50}
+          dataKey="merch"
+          stackId="a"
+          fill={PRODUCT_COLORS.merch}
+        />
+        <Bar
+          barSize={50}
+          dataKey="books"
+          stackId="a"
+          fill={PRODUCT_COLORS.books}
+        />
+        <Bar
+          barSize={50}
+          dataKey="boards"
+          stackId="a"
+          fill={PRODUCT_COLORS.boards}
+        />
       </BarChart>
     </ChartContainer>
   );
@@ -290,7 +311,6 @@ const TotalSalesChart = () => {
 
 const TotalRevenueChart = () => {
   const RevenueData = getRevenue(salesData);
-  console.log(RevenueData);
   return (
     <ChartContainer
       className="min-h-[350px] mt-5 max-w-full"
@@ -318,26 +338,26 @@ const TotalRevenueChart = () => {
         <Bar
           dataKey="bandsRevenue"
           stackId="a"
-          fill={"#00ac47"}
-          radius={[4, 4, 4, 4]}
+          fill={PRODUCT_COLORS.bands}
+          barSize={50}
         />
         <Bar
           dataKey="merchRevenue"
           stackId="a"
-          fill="#87A2FF"
-          radius={[4, 4, 4, 4]}
+          fill={PRODUCT_COLORS.merch}
+          barSize={50}
         />
         <Bar
           dataKey="booksRevenue"
           stackId="a"
-          fill="#FFF100"
-          radius={[4, 4, 4, 4]}
+          fill={PRODUCT_COLORS.books}
+          barSize={50}
         />
         <Bar
           dataKey="boardsRevenue"
           stackId="a"
-          fill="#f4a462"
-          radius={[4, 4, 4, 4]}
+          fill={PRODUCT_COLORS.boards}
+          barSize={50}
         />
       </BarChart>
     </ChartContainer>
@@ -362,6 +382,30 @@ const GPMarginChart = () => {
 
   return (
     <div className="">
+      <div className="w-32 grid grid-cols-2 p-1 h-10 border rounded mt-2">
+        <button
+          onClick={() => setActiveMetric("gpMargin")}
+          className={cn(
+            "w-full h-full grid place-items-center text-sm",
+            activeMetric === "gpMargin"
+              ? "bg-neutral-100 text-neutral-800 font-medium"
+              : "text-neutral-500"
+          )}
+        >
+          margin
+        </button>
+        <button
+          onClick={() => setActiveMetric("gpProfit")}
+          className={cn(
+            "w-full h-full grid place-items-center text-sm",
+            activeMetric === "gpProfit"
+              ? "bg-neutral-100 text-neutral-800 font-medium"
+              : "text-neutral-500"
+          )}
+        >
+          profit
+        </button>
+      </div>
       <ChartContainer className="min-h-[350px] max-w-full mt-5" config={config}>
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
@@ -412,70 +456,42 @@ const GPMarginChart = () => {
               activeMetric === "gpProfit" ? "bandsGProfit" : "bandsGPMargin"
             }
             stackId="a"
-            fill={"#00ac47"}
-            radius={[4, 4, 4, 4]}
+            fill={PRODUCT_COLORS.bands}
+            barSize={50}
           />
           <Bar
             dataKey={
               activeMetric === "gpProfit" ? "merchGProfit" : "merchGPMargin"
             }
             stackId="a"
-            fill="#87A2FF"
-            radius={[4, 4, 4, 4]}
+            fill={PRODUCT_COLORS.merch}
+            barSize={50}
           />
           <Bar
             dataKey={
               activeMetric === "gpProfit" ? "booksGProfit" : "booksGPMargin"
             }
             stackId="a"
-            fill="#FFF100"
-            radius={[4, 4, 4, 4]}
+            fill={PRODUCT_COLORS.books}
+            barSize={50}
           />
           <Bar
             dataKey={
               activeMetric === "gpProfit" ? "boardsGProfit" : "boardsGPMargin"
             }
             stackId="a"
-            fill="#f4a462"
-            radius={[4, 4, 4, 4]}
+            fill={PRODUCT_COLORS.boards}
+            barSize={50}
           />
         </BarChart>
       </ChartContainer>
-      <div className="w-32 grid grid-cols-2 p-1 h-10 border rounded mt-2">
-        <button
-          onClick={() => setActiveMetric("gpMargin")}
-          className={cn(
-            "w-full h-full grid place-items-center text-sm",
-            activeMetric === "gpMargin"
-              ? "bg-neutral-100 text-neutral-800 font-medium"
-              : "text-neutral-500"
-          )}
-        >
-          margin
-        </button>
-        <button
-          onClick={() => setActiveMetric("gpProfit")}
-          className={cn(
-            "w-full h-full grid place-items-center text-sm",
-            activeMetric === "gpProfit"
-              ? "bg-neutral-100 text-neutral-800 font-medium"
-              : "text-neutral-500"
-          )}
-        >
-          profit
-        </button>
-      </div>
     </div>
   );
 };
 
 const SalesMetrics = () => {
   return (
-    <div className="w-full border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between ">
-        <h1 className=" font-semibold ">Sales</h1>
-        <ChevronRight size={14} strokeWidth={4} />
-      </div>
+    <WidgetLayout title="Sales" link="">
       <div className="p-4 flex flex-col gap-3">
         <div className="">
           <h1 className=" font-medium mb-1">Number of sales</h1>
@@ -518,7 +534,7 @@ const SalesMetrics = () => {
           </p>
         </div>
       </div>
-    </div>
+    </WidgetLayout>
   );
 };
 

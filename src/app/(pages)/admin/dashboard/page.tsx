@@ -26,20 +26,28 @@ const Dashboard = () => {
           </small>
         </div>
         <hr />
-        <div className="mt-6 lg:mt-12  lg:space-y-0 max-w-5xl w-full mx-auto lg:grid lg:grid-cols-5 lg:gap-3">
-          <div className="col-span-1"></div>
-          <div className="col-span-4 space-y-8">
+        <div className="mt-6 lg:mt-12  lg:space-y-0 max-w-6xl w-full mx-auto lg:grid lg:grid-cols-8 lg:gap-3">
+          <div className="col-span-2">
+            <div className="sticky top-10 text-sm w-full h-20 flex flex-col gap-2 p-4">
+              <div>
+                <p>Training sessions</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-6 space-y-8">
             <SessionsMetrics />
             <GameParticipation />
             <CoachMetrics />
-            {/* <UpcomingSessions /> */}
             <ClientMetrics />
-          <SalesMetrics />
+            <SalesMetrics />
+            <OperatingExpenses />
           </div>
 
+          {/* <UpcomingSessions /> */}
           {/* 
    
-          <OperatingExpenses /> */}
+          
+          */}
         </div>
       </div>
     </PageLayout>

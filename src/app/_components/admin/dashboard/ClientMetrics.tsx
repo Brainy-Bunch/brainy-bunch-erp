@@ -151,12 +151,12 @@ const ClientAcquisitionChart = () => {
           dataKey="month"
           tickLine={false}
           axisLine={false}
-          className="lg:text-sm"
+          
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
+        <ChartLegend content={<ChartLegendContent  />} />
         <Line
           dataKey="chess"
           type="natural"
@@ -220,11 +220,10 @@ const ClientRetentionChart = () => {
           tickLine={false}
           axisLine={false}
           tickMargin={8}
-          className="lg:text-sm"
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent className="lg:text-sm" />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="chess"
           type="natural"
@@ -252,10 +251,10 @@ const ClientRetentionChart = () => {
         <Line
           dataKey="coding"
           type="natural"
-          stroke={ACTIVITY_COLORS.scrabble}
+          stroke={ACTIVITY_COLORS.coding}
           strokeWidth={2}
           dot={{
-            fill: ACTIVITY_COLORS.scrabble,
+            fill: ACTIVITY_COLORS.coding,
           }}
           activeDot={{
             r: 6,
