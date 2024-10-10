@@ -8,6 +8,7 @@ import SalesMetrics from "@/app/_components/admin/dashboard/SalesMetrics";
 import SessionsMetrics from "@/app/_components/admin/dashboard/SessionsMetrics";
 import UpcomingSessions from "@/app/_components/admin/dashboard/upcoming-sessions";
 import Header from "@/app/_components/shared/header";
+import Navigationbar from "@/app/_components/shared/navigation-bar";
 import { useAuth } from "@/app/context/authContext";
 
 const Dashboard = () => {
@@ -15,15 +16,16 @@ const Dashboard = () => {
   return (
     <div className=" pb-20">
       <Header role={user.user?.role || ""} />
+      <Navigationbar />
       <div className="px-4">
         <div className="mt-6 space-y-16">
-          <SessionsMetrics />
+          {/* <SessionsMetrics />
           <UpcomingSessions />
           <GameParticipation />
           <CoachMetrics />
           <SalesMetrics />
           <ClientMetrics />
-          <OperatingExpenses />
+          <OperatingExpenses /> */}
         </div>
       </div>
     </div>

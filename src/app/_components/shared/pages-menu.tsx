@@ -40,16 +40,16 @@ const PagesNavigation = () => {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none ring-transparent">
+        <DropdownMenuTrigger className="outline-none ring-transparent lg:hover:bg-neutral-100 lg:p-1 rounded-md lg:px-3">
           <div className="flex items-center gap-2">
-            <p className="text-base text-neutral-600">{page}</p>
+            <p className="text-base text-neutral-600 lg:font-medium lg:capitalize">Joan Watiri</p>
             <ChevronsUpDown size={14} />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[200px] shadow-sm p-2 flex flex-col gap-1 border border-slate-200"
+          className="w-[200px] lg:shadow shadow-sm p-2 flex z-[99999] flex-col gap-1 border border-slate-200"
           align="start"
-          sideOffset={10}
+          sideOffset={9}
         >
           {pages.map((page, index) => (
             <DropdownMenuItem
@@ -57,7 +57,7 @@ const PagesNavigation = () => {
               onClick={() => {
                 router.push(page.page_path);
               }}
-              className="text-base w-full flex items-center justify-between"
+              className="text-base cursor-pointer lg:font-medium lg:text-neutral-600 hover:bg-neutral-200/70 lg:hover:text-black w-full flex items-center justify-between"
             >
               <p className="lowercase"> {page.page_name}</p>
             </DropdownMenuItem>
